@@ -1,80 +1,186 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingCart, Search, User, Gift, MapPin, ChevronRight } from "lucide-react";
+import {
+  ShoppingCart,
+  Search,
+  User,
+  Gift,
+  MapPin,
+  ChevronRight,
+  Smartphone,
+  Truck,
+} from "lucide-react";
 
 // --- Mock Data (replace later with real backend) ---
 const heroSlides = [
-  { id: 1, eyebrow: "30% OFF TODAY", title: "Spring Collections", cta: "Shop Now",
-    image: "https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6?q=80&w=1600&auto=format&fit=crop" },
-  { id: 2, eyebrow: "30% OFF TODAY", title: "Fresh Flower", cta: "Shop Now",
-    image: "https://images.unsplash.com/photo-1503435824048-a799a3a84bf7?q=80&w=1600&auto=format&fit=crop" },
-  { id: 3, eyebrow: "30% OFF TODAY", title: "Inspired By Nature", cta: "Shop Now",
-    image: "https://images.unsplash.com/photo-1435783459217-ee7fe5414abe?q=80&w=1600&auto=format&fit=crop" },
+  {
+    id: 1,
+    eyebrow: "30% OFF TODAY",
+    title: "Spring Collections",
+    cta: "Shop Now",
+    image:
+      "https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6?q=80&w=1600&auto=format&fit=crop",
+  },
+  {
+    id: 2,
+    eyebrow: "30% OFF TODAY",
+    title: "Fresh Flower",
+    cta: "Shop Now",
+    image:
+      "https://images.unsplash.com/photo-1503435824048-a799a3a84bf7?q=80&w=1600&auto=format&fit=crop",
+  },
+  {
+    id: 3,
+    eyebrow: "30% OFF TODAY",
+    title: "Inspired By Nature",
+    cta: "Shop Now",
+    image:
+      "https://images.unsplash.com/photo-1435783459217-ee7fe5414abe?q=80&w=1600&auto=format&fit=crop",
+  },
 ];
 
+// CATEGORÍAS EN ESPAÑOL
 const categories = [
-  { name: "Bespoke" }, { name: "Birthday" }, { name: "Next Day" },
-  { name: "Plant" }, { name: "Sympathy" }, { name: "Wedding" },
+  { name: "BESKOPE" },          // si quieres BESPOKE, me dices y lo cambio
+  { name: "CUMPLEAÑOS" },
+  { name: "DÍA SIGUIENTE" },
+  { name: "PLANES" },           // si era PLANTAS, lo ajusto
+  { name: "BODAS" },
+  { name: "DÍA DE LAS MADRES" },
+  { name: "DÍA DE MUERTOS" },
 ];
 
 const products = [
-  { id: 93, name: "Love Story", price: 135, images: [
+  {
+    id: 93,
+    name: "Love Story",
+    price: 135,
+    images: [
       "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1519681395604-b2b7b3d29747?q=80&w=1200&auto=format&fit=crop",
-    ]},
-  { id: 95, name: "Winifred", price: 100, images: [
+    ],
+  },
+  {
+    id: 95,
+    name: "Winifred",
+    price: 100,
+    images: [
       "https://images.unsplash.com/photo-1457089328109-e5d9bd499191?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?q=80&w=1200&auto=format&fit=crop",
-    ]},
-  { id: 97, name: "Elegant Flower", price: 120, images: [
+    ],
+  },
+  {
+    id: 97,
+    name: "Elegant Flower",
+    price: 120,
+    images: [
       "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1505577058444-a3dab90d4253?q=80&w=1200&auto=format&fit=crop",
-    ]},
-  { id: 99, name: "Love You", price: 200, images: [
+    ],
+  },
+  {
+    id: 99,
+    name: "Love You",
+    price: 200,
+    images: [
       "https://images.unsplash.com/photo-1485875437342-9b39470b3d95?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1200&auto=format&fit=crop",
-    ]},
-  { id: 55, name: "Sun Light", price: 100, images: [
+    ],
+  },
+  {
+    id: 55,
+    name: "Sun Light",
+    price: 100,
+    images: [
       "https://images.unsplash.com/photo-1505577058444-a3dab90d4253?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1485875437342-9b39470b3d95?q=80&w=1200&auto=format&fit=crop",
-    ]},
-  { id: 102, name: "Lovely", price: 200, images: [
+    ],
+  },
+  {
+    id: 102,
+    name: "Lovely",
+    price: 200,
+    images: [
       "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1457089328109-e5d9bd499191?q=80&w=1200&auto=format&fit=crop",
-    ], badge: "-40%" },
-  { id: 103, name: "Scarlet Flower", price: 60, compareAt: 90, options: ["Black","Green","Red"], images: [
+    ],
+    badge: "-40%",
+  },
+  {
+    id: 103,
+    name: "Scarlet Flower",
+    price: 60,
+    compareAt: 90,
+    options: ["Black", "Green", "Red"],
+    images: [
       "https://images.unsplash.com/photo-1519681395604-b2b7b3d29747?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop",
-    ]},
+    ],
+  },
 ];
 
 const banners = [
-  { title: "Funerals", copy: "We offer a wide range of potted plants and Terrariums & Potted Orchids",
-    image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1200&auto=format&fit=crop" },
-  { title: "Weddings", copy: "We offer a wide range of potted plants and Terrariums & Potted Orchids",
-    image: "https://images.unsplash.com/photo-1460039230329-eb070fc6c77c?q=80&w=1200&auto=format&fit=crop" },
-  { title: "Plants & Terrariums", copy: "We offer a wide range of potted plants and Terrariums & Potted Orchids",
-    image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1200&auto=format&fit=crop" },
-  { title: "Gift Hampers", copy: "We offer a wide range of potted plants and Terrariums & Potted Orchids",
-    image: "https://images.unsplash.com/photo-1491554150235-3603d2d4e9a7?q=80&w=1200&auto=format&fit=crop" },
+  {
+    title: "Funerals",
+    copy:
+      "We offer a wide range of potted plants and Terrariums & Potted Orchids",
+    image:
+      "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1200&auto=format&fit=crop",
+  },
+  {
+    title: "Weddings",
+    copy:
+      "We offer a wide range of potted plants and Terrariums & Potted Orchids",
+    image:
+      "https://images.unsplash.com/photo-1460039230329-eb070fc6c77c?q=80&w=1200&auto=format&fit=crop",
+  },
+  {
+    title: "Plants & Terrariums",
+    copy:
+      "We offer a wide range of potted plants and Terrariums & Potted Orchids",
+    image:
+      "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1200&auto=format&fit=crop",
+  },
+  {
+    title: "Gift Hampers",
+    copy:
+      "We offer a wide range of potted plants and Terrariums & Potted Orchids",
+    image:
+      "https://images.unsplash.com/photo-1491554150235-3603d2d4e9a7?q=80&w=1200&auto=format&fit=crop",
+  },
 ];
 
 const testimonials = [
-  { quote: "Amazing piece of history. Blood bank canine teeth larynx occupational therapist optician…",
+  {
+    quote:
+      "Amazing piece of history. Blood bank canine teeth larynx occupational therapist optician…",
     author: "Ann Smith",
-    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=256&auto=format&fit=crop" },
-  { quote: "Fabulous grounds. Blood bank canine teeth larynx occupational therapist optician…",
+    avatar:
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=256&auto=format&fit=crop",
+  },
+  {
+    quote:
+      "Fabulous grounds. Blood bank canine teeth larynx occupational therapist optician…",
     author: "Saitama One",
-    avatar: "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=256&auto=format&fit=crop" },
-  { quote: "Great vineyard tour and tasting! Blood bank canine teeth…",
+    avatar:
+      "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=256&auto=format&fit=crop",
+  },
+  {
+    quote:
+      "Great vineyard tour and tasting! Blood bank canine teeth…",
     author: "Sara Colinton",
-    avatar: "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=256&auto=format&fit=crop" },
-  { quote: "Stunning design. Blood bank canine teeth…",
+    avatar:
+      "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=256&auto=format&fit=crop",
+  },
+  {
+    quote:
+      "Stunning design. Blood bank canine teeth…",
     author: "Shetty Jamie",
-    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=256&auto=format&fit=crop" },
+    avatar:
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=256&auto=format&fit=crop",
+  },
 ];
 
-// --- UI bits ---
 function Container({ children }) {
   return <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{children}</div>;
 }
@@ -112,7 +218,8 @@ function Header() {
       <Container>
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
-            <a className="text-2xl font-semibold tracking-tight" href="#">Florial</a>
+            {/* LOGO CAMBIADO */}
+            <a className="text-2xl font-semibold tracking-tight" href="#">CUSIFLORES</a>
             <nav className="hidden lg:flex items-center gap-6 text-sm text-gray-700">
               <a className="hover:text-gray-900" href="#">Home</a>
               <a className="hover:text-gray-900" href="#">Shop</a>
@@ -143,7 +250,9 @@ function Hero() {
   const current = useMemo(() => heroSlides[index], [index]);
 
   useEffect(() => {
-    const t = setInterval(() => setIndex((i) => (i + 1) % heroSlides.length), 4500);
+    const t = setInterval(() => {
+      setIndex((i) => (i + 1) % heroSlides.length);
+    }, 4500);
     return () => clearInterval(t);
   }, []);
 
@@ -179,16 +288,40 @@ function Hero() {
           </div>
         </Container>
       </div>
+
+      {/* FEATURES con ICONOS debajo del slider */}
       <Container>
         <div className="-mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
           {[
-            { t: "Order Online", d: "We’re at capacity for deliveries Monday 30th August" },
-            { t: "Our Stores", d: "We have 4 stores located in the North West of Sydney" },
-            { t: "Delivery", d: "Order before 1pm Mon–Fri or 12pm Sat for same-day" },
+            {
+              t: "Order Online",
+              d: "We’re at capacity for deliveries Monday 30th August",
+              Icon: Smartphone,
+            },
+            {
+              t: "Our Stores",
+              d: "We have 4 stores located in the North West of Sydney",
+              Icon: MapPin,
+            },
+            {
+              t: "Delivery",
+              d: "Order before 1pm Mon–Fri or 12pm Sat for same-day",
+              Icon: Truck,
+            },
           ].map((f) => (
-            <div key={f.t} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
-              <div className="text-xs font-semibold tracking-wider text-gray-500 uppercase">{f.t}</div>
-              <div className="mt-1 text-sm text-gray-700">{f.d}</div>
+            <div
+              key={f.t}
+              className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-100"
+            >
+              <div className="flex items-start gap-3">
+                <f.Icon className="h-6 w-6 text-pink-600" />
+                <div>
+                  <div className="text-base font-semibold text-gray-900">
+                    {f.t}
+                  </div>
+                  <div className="mt-1 text-sm text-gray-700">{f.d}</div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -201,11 +334,17 @@ function OccasionGrid() {
   return (
     <section className="py-12 lg:py-16">
       <Container>
-        <h2 className="text-2xl font-semibold tracking-tight">Shop by Occasion</h2>
-        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+        <h2 className="text-2xl font-semibold tracking-tight uppercase">
+          SHOP BY OCCASION
+        </h2>
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
           {categories.map((c) => (
-            <button key={c.name}
-              className="rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:border-gray-300 hover:shadow">
+            <button
+              key={c.name}
+              className={`rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:border-gray-300 hover:shadow ${
+                c.name === "BESKOPE" ? "underline underline-offset-4" : ""
+              }`}
+            >
               {c.name}
             </button>
           ))}
@@ -230,13 +369,22 @@ function ProductCard({ p }) {
         </span>
       )}
       <div className="aspect-[4/3] overflow-hidden">
-        <img src={img} alt={p.name} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+        <img
+          src={img}
+          alt={p.name}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
       </div>
       <div className="p-4">
         <h3 className="text-sm font-medium text-gray-900">{p.name}</h3>
         <div className="mt-1 flex items-center gap-2">
           <div className="text-base font-semibold">${p.price.toFixed(2)}</div>
-          {p.compareAt && <div className="text-sm text-gray-400 line-through">${p.compareAt.toFixed(2)}</div>}
+          {p.compareAt && (
+            <div className="text-sm text-gray-400 line-through">
+              ${p.compareAt.toFixed(2)}
+            </div>
+          )}
         </div>
         <div className="mt-3 flex items-center gap-2">
           <button className="flex-1 rounded-xl bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-black">
@@ -256,7 +404,9 @@ function ProductGrid() {
     <section className="pb-6 pt-2 lg:pb-10">
       <Container>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {products.map((p) => <ProductCard key={p.id} p={p} />)}
+          {products.map((p) => (
+            <ProductCard key={p.id} p={p} />
+          ))}
         </div>
       </Container>
     </section>
@@ -270,7 +420,12 @@ function FourBanners() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
           {banners.map((b) => (
             <div key={b.title} className="relative overflow-hidden rounded-2xl">
-              <img src={b.image} alt={b.title} className="h-60 w-full object-cover" />
+              <img
+                src={b.image}
+                alt={b.title}
+                loading="lazy"
+                className="h-60 w-full object-cover"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <div className="absolute inset-0 p-6 text-white">
                 <h3 className="text-xl font-semibold">{b.title}</h3>
@@ -290,7 +445,10 @@ function FourBanners() {
 function TestimonialCarousel() {
   const [i, setI] = useState(0);
   useEffect(() => {
-    const t = setInterval(() => setI((v) => (v + 1) % testimonials.length), 4000);
+    const t = setInterval(
+      () => setI((v) => (v + 1) % testimonials.length),
+      4000
+    );
     return () => clearInterval(t);
   }, []);
   const current = testimonials[i];
@@ -313,8 +471,14 @@ function TestimonialCarousel() {
             </AnimatePresence>
           </div>
           <div className="flex items-center gap-3">
-            <img src={current.avatar} className="h-12 w-12 rounded-full object-cover" />
-            <div className="text-sm font-medium text-gray-700">{current.author}</div>
+            <img
+              src={current.avatar}
+              className="h-12 w-12 rounded-full object-cover"
+              loading="lazy"
+            />
+            <div className="text-sm font-medium text-gray-700">
+              {current.author}
+            </div>
           </div>
         </div>
       </Container>
@@ -328,13 +492,17 @@ function SubscriptionCTA() {
       <Container>
         <div className="grid gap-8 rounded-3xl bg-gradient-to-br from-emerald-50 to-teal-50 p-8 md:grid-cols-2">
           <div>
-            <h2 className="text-3xl font-semibold tracking-tight">Flower Subscriptions</h2>
+            <h2 className="text-3xl font-semibold tracking-tight">
+              Flower Subscriptions
+            </h2>
             <p className="mt-2 text-gray-700">
-              A new way to gift fam & friends in one subscription. Switch up recipients to cover
-              Birthdays, Thank You’s, Just Because & more!
+              A new way to gift fam & friends in one subscription. Switch up
+              recipients to cover Birthdays, Thank You’s, Just Because & more!
             </p>
             <ul className="mt-4 grid grid-cols-1 gap-2 text-sm text-gray-700 md:grid-cols-2">
-              <li><strong>30% OFF + Free Shipping</strong></li>
+              <li>
+                <strong>30% OFF + Free Shipping</strong>
+              </li>
               <li>Starting at $36/mo</li>
               <li>Freshest Blooms</li>
               <li>Super Flexible</li>
@@ -348,6 +516,7 @@ function SubscriptionCTA() {
               className="h-full w-full rounded-2xl object-cover"
               src="https://images.unsplash.com/photo-1460039230329-eb070fc6c77c?q=80&w=1400&auto=format&fit=crop"
               alt="Subscription"
+              loading="lazy"
             />
           </div>
         </div>
@@ -362,7 +531,7 @@ function Footer() {
       <Container>
         <div className="grid gap-8 md:grid-cols-4">
           <div>
-            <div className="text-2xl font-semibold">Florial</div>
+            <div className="text-2xl font-semibold">CUSIFLORES</div>
             <p className="mt-3 text-sm text-gray-600 max-w-xs">
               Sign up for the latest offers and exclusives.
             </p>
@@ -377,25 +546,63 @@ function Footer() {
             </div>
           </div>
           <div>
-            <div className="text-sm font-semibold uppercase tracking-wider text-gray-500">About us</div>
+            <div className="text-sm font-semibold uppercase tracking-wider text-gray-500">
+              About us
+            </div>
             <ul className="mt-3 space-y-2 text-sm text-gray-700">
-              <li><a href="#" className="hover:text-gray-900">Our Difference</a></li>
-              <li><a href="#" className="hover:text-gray-900">Community Matters</a></li>
-              <li><a href="#" className="hover:text-gray-900">Press</a></li>
-              <li><a href="#" className="hover:text-gray-900">Blog</a></li>
+              <li>
+                <a href="#" className="hover:text-gray-900">
+                  Our Difference
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gray-900">
+                  Community Matters
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gray-900">
+                  Press
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gray-900">
+                  Blog
+                </a>
+              </li>
             </ul>
           </div>
           <div>
-            <div className="text-sm font-semibold uppercase tracking-wider text-gray-500">Help</div>
+            <div className="text-sm font-semibold uppercase tracking-wider text-gray-500">
+              Help
+            </div>
             <ul className="mt-3 space-y-2 text-sm text-gray-700">
-              <li><a href="#" className="hover:text-gray-900">Flower Care</a></li>
-              <li><a href="#" className="hover:text-gray-900">Shipping</a></li>
-              <li><a href="#" className="hover:text-gray-900">Terms of Use</a></li>
-              <li><a href="#" className="hover:text-gray-900">Privacy Policy</a></li>
+              <li>
+                <a href="#" className="hover:text-gray-900">
+                  Flower Care
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gray-900">
+                  Shipping
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gray-900">
+                  Terms of Use
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gray-900">
+                  Privacy Policy
+                </a>
+              </li>
             </ul>
           </div>
           <div>
-            <div className="text-sm font-semibold uppercase tracking-wider text-gray-500">Local</div>
+            <div className="text-sm font-semibold uppercase tracking-wider text-gray-500">
+              Local
+            </div>
             <ul className="mt-3 space-y-2 text-sm text-gray-700">
               <li>Los Angeles</li>
               <li>San Francisco</li>
@@ -406,7 +613,9 @@ function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mt-10 text-xs text-gray-500">© 2025 Florial Flower. All rights reserved.</div>
+        <div className="mt-10 text-xs text-gray-500">
+          © 2025 CUSIFLORES. All rights reserved.
+        </div>
       </Container>
     </footer>
   );

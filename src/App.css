@@ -1,82 +1,81 @@
-/* ---------- Hero slider ---------- */
+/* ====== Reset básico ====== */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, sans-serif;
+}
+
+/* ====== HERO SLIDER ====== */
 .hero {
   position: relative;
   width: 100%;
-  aspect-ratio: 16/6;
+  height: 500px; /* altura en desktop */
   overflow: hidden;
 }
 
-@media (max-width: 1024px) {
-  .hero { aspect-ratio: 16/7; }
+@media (max-width: 768px) {
+  .hero {
+    height: 350px; /* altura en móvil */
+  }
 }
 
 .hero-img {
-  position: absolute;
-  inset: 0;
-  height: 100%;
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
 .hero-overlay {
   position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,.30);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.35);
 }
 
 .hero-content {
   position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  color: white;
+  z-index: 2;
 }
 
-/* Dots */
-.hero-dots {
-  position: absolute;
-  bottom: 14px;
-  left: 0; right: 0;
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-}
-.dot {
-  height: 8px;
-  width: 8px;
-  border-radius: 9999px;
-  background: rgba(255,255,255,.65);
-  transition: all .2s ease;
-}
-.dot.active {
-  width: 24px;
-  background: #fff;
-}
-
-/* Buttons */
 .btn-primary {
-  display: inline-block;
-  border-radius: .75rem;
-  background: #db2777;     /* pink-600 */
-  color: #fff;
-  padding: .5rem 1rem;
-  font-weight: 600;
+  background-color: #db2777; /* rosa */
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
 }
-.btn-primary:hover { background: #be185d; } /* pink-700 */
+
+.btn-primary:hover {
+  background-color: #be185d;
+}
 
 .btn-secondary {
-  display: inline-block;
-  border-radius: .75rem;
-  background: rgba(255,255,255,.9);
-  color: #111827; /* neutral-900 */
-  padding: .5rem 1rem;
-  font-weight: 600;
+  background-color: transparent;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid white;
 }
-.btn-secondary:hover { background: #fff; }
 
-/* ---------- Products (extra suavidad) ---------- */
-.products-grid img {
-  transition: transform .25s ease;
+.btn-secondary:hover {
+  background-color: white;
+  color: black;
 }
-.products-grid img:hover {
-  transform: scale(1.02);
-}
+
+/* ====== DOTS ====== */
+.hero-dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform:

@@ -1,14 +1,9 @@
-/* App.css */
-
-body {
-  margin: 0;
-  font-family: system-ui, sans-serif;
-}
-
+/* ====== Slider ====== */
 .hero {
   position: relative;
   width: 100%;
-  height: 45vh; /* Reducido a la mitad del tamaño original */
+  height: 60vh; /* antes ocupaba casi toda la pantalla */
+  min-height: 400px;
   overflow: hidden;
 }
 
@@ -21,7 +16,7 @@ body {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.35);
 }
 
 .hero-content {
@@ -33,12 +28,20 @@ body {
   z-index: 2;
 }
 
+.hero-content h1 {
+  font-size: clamp(1.8rem, 4vw, 3rem); /* responsive */
+}
+
+.hero-content p {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+}
+
 .hero-dots {
   position: absolute;
   bottom: 15px;
-  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  justify-content: center;
   gap: 8px;
   z-index: 3;
 }
@@ -54,22 +57,50 @@ body {
 
 .dot.active {
   opacity: 1;
-  background: #ec4899;
 }
 
-.btn-primary {
-  background: #ec4899;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  text-decoration: none;
+/* ====== Icon Row ====== */
+section.bg-white .grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
 }
 
-.btn-secondary {
-  background: transparent;
-  border: 1px solid white;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  text-decoration: none;
+section.bg-white .flex.items-start {
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+section.bg-white .flex.items-start svg {
+  margin-bottom: 8px;
+}
+
+/* ====== Shop by Occasion ====== */
+#occasions h2 {
+  margin-bottom: 1.5rem;
+}
+
+#occasions .flex {
+  gap: 12px;
+}
+
+#occasions button {
+  background-color: white;
+  transition: 0.2s;
+}
+
+#occasions button:hover {
+  background-color: #f9f9f9;
+  border-color: #ff69b4;
+  color: #ff69b4;
+}
+
+/* ====== Products ====== */
+#products img {
+  transition: transform 0.3s ease;
+}
+
+#products img:hover {
+  transform: scale(1.05);
 }

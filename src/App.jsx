@@ -140,7 +140,6 @@ function IconRow() {
 
   return (
     <section className="bg-white">
-      {/* margen superior generoso para que no quede pegado al slider */}
       <div className="mx-auto max-w-7xl px-4 py-10 md:py-14">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {items.map((it) => (

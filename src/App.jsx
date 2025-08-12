@@ -1,353 +1,205 @@
-// src/App.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  ShoppingCart,
-  Search,
-  User,
-  Gift,
-  MapPin,
-  ChevronRight,
-  Smartphone,
-  Truck,
-} from "lucide-react";
 
-/* ===========================
-   DATA
-   =========================== */
+/* ------------------------------ DATA ------------------------------ */
 
-// Tus 4 fotos locales del slider
+// Slider: usa imágenes locales en public/slider/
 const heroSlides = [
-  {
-    id: 1,
-    eyebrow: " ",
-    title: "Colección Especial",
-    cta: "Shop Now",
-    image: "/slider/foto1.jpg",
-    alt: "Colección Especial",
-  },
-  {
-    id: 2,
-    eyebrow: " ",
-    title: "Nuevos Arreglos",
-    cta: "Shop Now",
-    image: "/slider/foto2.jpg",
-    alt: "Nuevos Arreglos",
-  },
-  {
-    id: 3,
-    eyebrow: " ",
-    title: "Flores Únicas",
-    cta: "Shop Now",
-    image: "/slider/foto3.jpg",
-    alt: "Flores Únicas",
-  },
-  {
-    id: 4,
-    eyebrow: " ",
-    title: "Edición Limitada",
-    cta: "Shop Now",
-    image: "/slider/foto4.jpg",
-    alt: "Edición Limitada",
-  },
+  { src: "/slider/foto1.jpg", headline: "Arreglos que dicen más", sub: "Entrega el mismo día en CDMX*" },
+  { src: "/slider/foto2.jpg", headline: "Flores frescas, siempre", sub: "Diseños exclusivos Cusiflores" },
+  { src: "/slider/foto3.jpg", headline: "Celebra cada momento", sub: "Cuidado y selección premium" },
+  { src: "/slider/foto4.jpg", headline: "Envía amor en un ramo", sub: "Atención personalizada" },
 ];
 
-const categories = [
-  { name: "BESKOPE" },      // lo dejamos tal cual pediste
-  { name: "CUMPLEAÑOS" },
-  { name: "DÍA SIGUIENTE" },
-  { name: "PLANES" },       // dime si querías PLANTAS
-  { name: "BODAS" },
-  { name: "DÍA DE LAS MADRES" },
-  { name: "DÍA DE MUERTOS" },
+// Chips de ocasión
+const occasions = [
+  "BESPOKE",
+  "CUMPLEAÑOS",
+  "DÍA SIGUIENTE",
+  "PLANTAS",
+  "BODAS",
+  "DÍA DE LAS MADRES",
+  "DÍA DE MUERTOS",
 ];
 
-// Productos con look catálogo (luego cambiamos por catálogo real si quieres)
+// Productos: usa imágenes locales en public/products/
 const products = [
-  {
-    id: 101,
-    name: "Love Story",
-    price: 135,
-    images: [
-      "https://images.unsplash.com/photo-1491002052546-bf38f186af56?q=80&w=1400&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1484704849700-f032a568e944?q=80&w=1400&auto=format&fit=crop",
-    ],
-  },
-  {
-    id: 102,
-    name: "Winifred",
-    price: 100,
-    images: [
-      "https://images.unsplash.com/photo-1509043759401-136742328bb3?q=80&w=1400&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?q=80&w=1400&auto=format&fit=crop",
-    ],
-  },
-  {
-    id: 103,
-    name: "Elegant Flower",
-    price: 120,
-    images: [
-      "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?q=80&w=1400&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1519681395604-b2b7b3d29747?q=80&w=1400&auto=format&fit=crop",
-    ],
-  },
-  {
-    id: 104,
-    name: "Love You",
-    price: 200,
-    images: [
-      "https://images.unsplash.com/photo-1491554150235-3603d2d4e9a7?q=80&w=1400&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1400&auto=format&fit=crop",
-    ],
-  },
-  {
-    id: 105,
-    name: "Sun Light",
-    price: 100,
-    images: [
-      "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1400&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1436891620584-47fd0e565afb?q=80&w=1400&auto=format&fit=crop",
-    ],
-  },
-  {
-    id: 106,
-    name: "Lovely",
-    price: 200,
-    badge: "-40%",
-    images: [
-      "https://images.unsplash.com/photo-1457089328109-e5d9bd499191?q=80&w=1400&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1458538977777-0549b2370168?q=80&w=1400&auto=format&fit=crop",
-    ],
-  },
-  {
-    id: 107,
-    name: "Scarlet Flower",
-    price: 60,
-    compareAt: 90,
-    images: [
-      "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1400&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1505577058444-a3dab90d4253?q=80&w=1400&auto=format&fit=crop",
-    ],
-  },
-  {
-    id: 108,
-    name: "Pure White",
-    price: 85,
-    images: [
-      "https://images.unsplash.com/photo-1519681395604-b2b7b3d29747?q=80&w=1400&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1547097465-8692e2f5a00b?q=80&w=1400&auto=format&fit=crop",
-    ],
-  },
+  { id: 201, name: "Rosas amarillas (mini)", price: 120, img: "/products/product-01.jpg" },
+  { id: 202, name: "Diente de león con luz", price: 100, img: "/products/product-02.jpg" },
+  { id: 203, name: "Rosas naranja con verde", price: 135, img: "/products/product-03.jpg" },
+  { id: 204, name: "Cubeta rosa", price: 200, img: "/products/product-04.jpg" },
+  { id: 205, name: "Cubeta morada", price: 200, img: "/products/product-05.jpg" },
+  { id: 206, name: "Astromelias en maceta", price: 85,  img: "/products/product-06.jpg" },
+  { id: 207, name: "Arreglo grande 1", price: 260, img: "/products/product-07.jpg" },
+  { id: 208, name: "Arreglo grande 2", price: 260, img: "/products/product-08.jpg" },
 ];
 
-/* ===========================
-   UI PRIMITIVES
-   =========================== */
-
-function Container({ children }) {
-  return <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{children}</div>;
-}
-
-function TopBar() {
-  return (
-    <div className="w-full border-b border-gray-200 text-sm">
-      <Container>
-        <div className="flex items-center justify-between py-2">
-          <div className="flex items-center gap-3 text-gray-600">
-            <a href="#" className="inline-flex items-center gap-2 hover:text-gray-900">
-              <MapPin className="h-4 w-4" /> Find Store
-            </a>
-            <span className="hidden md:inline text-gray-300">|</span>
-            <a href="tel:+1202333800" className="hover:text-gray-900">
-              (+1)202-333-800
-            </a>
-          </div>
-          <div className="flex items-center gap-4 text-gray-600">
-            <a href="#" className="inline-flex items-center gap-2 hover:text-gray-900">
-              <Gift className="h-4 w-4" /> Gift Cards
-            </a>
-            <a href="#" className="hover:text-gray-900">FAQs</a>
-            <a href="#" className="hover:text-gray-900">Contact</a>
-          </div>
-        </div>
-      </Container>
-    </div>
-  );
-}
+/* ---------------------------- COMPONENTS --------------------------- */
 
 function Header() {
   return (
-    <div className="sticky top-0 z-40 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-gray-100">
-      <Container>
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center gap-8">
-            <a className="text-2xl font-semibold tracking-tight" href="#">
-              CUSIFLORES
-            </a>
-            <nav className="hidden lg:flex items-center gap-6 text-sm text-gray-700">
-              <a className="hover:text-gray-900" href="#">Home</a>
-              <a className="hover:text-gray-900" href="#">Shop</a>
-              <a className="hover:text-gray-900" href="#">Blog</a>
-              <a className="hover:text-gray-900" href="#">About</a>
-              <a className="hover:text-gray-900" href="#">Contact</a>
-            </nav>
-          </div>
-          <div className="flex items-center gap-3">
-            <button className="p-2 hover:bg-gray-100 rounded-full" aria-label="Search">
-              <Search className="h-5 w-5" />
-            </button>
-            <button className="p-2 hover:bg-gray-100 rounded-full" aria-label="Account">
-              <User className="h-5 w-5" />
-            </button>
-            <button className="p-2 hover:bg-gray-100 rounded-full" aria-label="Cart">
-              <ShoppingCart className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
-      </Container>
-    </div>
+    <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur border-b border-neutral-200">
+      <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
+        <a href="/" className="font-extrabold tracking-wide text-2xl">
+          <span className="text-pink-600">CUSI</span>FLORES
+        </a>
+        <nav className="hidden md:flex gap-6 text-sm text-neutral-700">
+          <a href="#occasions" className="hover:text-pink-600">Ocasiones</a>
+          <a href="#products" className="hover:text-pink-600">Productos</a>
+          <a href="#contact" className="hover:text-pink-600">Contacto</a>
+        </nav>
+      </div>
+    </header>
   );
 }
 
-function Hero() {
-  const [index, setIndex] = useState(0);
-  const current = useMemo(() => heroSlides[index], [index]);
-
+function HeroSlider() {
+  const [i, setI] = useState(0);
+  const slides = useMemo(() => heroSlides.filter(Boolean), []);
   useEffect(() => {
-    const t = setInterval(() => setIndex((i) => (i + 1) % heroSlides.length), 4500);
-    return () => clearInterval(t);
-  }, []);
+    const id = setInterval(() => setI((p) => (p + 1) % slides.length), 5500);
+    return () => clearInterval(id);
+  }, [slides.length]);
+
+  if (!slides.length) return null;
+
+  const curr = slides[i];
 
   return (
-    <div className="relative">
-      <div className="relative h-[60vh] lg:h-[78vh] overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={current.id}
-            src={current.image}
-            className="absolute inset-0 h-full w-full object-cover"
-            referrerPolicy="no-referrer"
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
-            transition={{ duration: 0.8 }}
-            alt={current.alt || current.title}
-          />
-        </AnimatePresence>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
-        <Container>
-          <div className="relative z-10 flex h-[60vh] lg:h-[78vh] items-center">
-            <div className="max-w-xl text-white">
-              {current.eyebrow?.trim() && (
-                <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs uppercase tracking-widest ring-1 ring-white/30">
-                  {current.eyebrow}
-                </span>
-              )}
-              <h1 className="mt-4 text-4xl font-semibold leading-tight md:text-5xl lg:text-6xl">
-                {current.title}
-              </h1>
-              <button className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-medium text-gray-900 shadow hover:shadow-md">
-                {current.cta} <ChevronRight className="h-4 w-4" />
-              </button>
+    <section className="relative w-full aspect-[16/6] sm:aspect-[16/7] md:aspect-[16/6] overflow-hidden">
+      <img
+        src={curr.src}
+        alt={curr.headline}
+        className="absolute inset-0 h-full w-full object-cover"
+        loading="eager"
+      />
+      <div className="absolute inset-0 bg-black/30" />
+      <div className="absolute inset-0 flex items-center">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="max-w-xl text-white">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight drop-shadow">
+              {curr.headline}
+            </h1>
+            <p className="mt-3 text-base sm:text-lg opacity-95">{curr.sub}</p>
+            <div className="mt-6 flex gap-3">
+              <a href="#products" className="rounded-xl bg-pink-600 px-4 py-2 text-white font-medium hover:bg-pink-700">
+                Ver catálogo
+              </a>
+              <a href="#contact" className="rounded-xl bg-white/90 px-4 py-2 text-neutral-900 font-medium hover:bg-white">
+                Cotizar personalizado
+              </a>
             </div>
           </div>
-        </Container>
-      </div>
-    </div>
-  );
-}
-
-// Tarjeta con los 3 features (separada del slider)
-function FeatureCard() {
-  const items = [
-    { t: "Order Online", d: "We’re at capacity for deliveries Monday 30th August", Icon: Smartphone },
-    { t: "Our Stores",  d: "We have 4 stores located in the North West of Sydney", Icon: MapPin },
-    { t: "Delivery",    d: "Order before 1pm Mon–Fri or 12pm Sat for same-day",  Icon: Truck },
-  ];
-  return (
-    <section className="mt-8 md:mt-12">
-      <Container>
-        <div className="rounded-3xl bg-white/95 backdrop-blur shadow-xl ring-1 ring-gray-100">
-          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200">
-            {items.map((f) => (
-              <div key={f.t} className="flex items-start gap-4 p-6">
-                <f.Icon className="h-8 w-8 text-pink-600" />
-                <div>
-                  <div className="text-lg font-semibold text-gray-900">{f.t}</div>
-                  <div className="mt-1 text-sm text-gray-700 leading-6">{f.d}</div>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
-      </Container>
+      </div>
+
+      {/* dots */}
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+        {slides.map((_, idx) => (
+          <button
+            key={idx}
+            aria-label={`Ir al slide ${idx + 1}`}
+            onClick={() => setI(idx)}
+            className={`h-2 w-2 rounded-full transition-all ${idx === i ? "bg-white w-6" : "bg-white/60"}`}
+          />
+        ))}
+      </div>
     </section>
   );
 }
 
-// SHOP BY OCCASION centrado
-function OccasionGrid() {
+function IconRow() {
+  const items = [
+    {
+      title: "Order Online",
+      text: "Capacidad limitada en días pico. Entregas el mismo día*",
+      svg: (
+        <svg viewBox="0 0 24 24" className="w-9 h-9 text-pink-600">
+          <path fill="currentColor" d="M7 18a2 2 0 1 0 0 4a2 2 0 0 0 0-4m10 0a2 2 0 1 0 0 4a2 2 0 0 0 0-4M3 2h3l3.6 7.59L8.25 12A2 2 0 0 0 10 15h9v-2h-8.42a.25.25 0 0 1-.24-.33L11.1 11h6.45a2 2 0 0 0 1.86-1.26l2.38-5.64A1 1 0 0 0 21 3H6.21L5.27 1H1v2Z"/>
+        </svg>
+      ),
+    },
+    {
+      title: "Our Stores",
+      text: "4 sucursales en el Noroeste de la CDMX",
+      svg: (
+        <svg viewBox="0 0 24 24" className="w-9 h-9 text-pink-600">
+          <path fill="currentColor" d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7m0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5"/>
+        </svg>
+      ),
+    },
+    {
+      title: "Delivery",
+      text: "Ordena antes de la 1 pm (L–V) o 12 pm (Sáb) para entrega el mismo día",
+      svg: (
+        <svg viewBox="0 0 24 24" className="w-9 h-9 text-pink-600">
+          <path fill="currentColor" d="M3 7h13v10H3zm13 3h3l3 3v4h-6zM5 19a2 2 0 1 1 4 0a2 2 0 0 1-4 0m10 0a2 2 0 1 1 4 0a2 2 0 0 1-4 0"/>
+        </svg>
+      ),
+    },
+  ];
+
   return (
-    <section className="py-12 lg:py-16">
-      <Container>
-        <h2 className="text-2xl font-semibold tracking-tight uppercase text-center">
+    <section className="bg-white">
+      {/* margen superior generoso para que no quede pegado al slider */}
+      <div className="mx-auto max-w-7xl px-4 py-10 md:py-14">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {items.map((it) => (
+            <div key={it.title} className="flex items-start gap-4">
+              {it.svg}
+              <div>
+                <h3 className="text-lg font-semibold">{it.title}</h3>
+                <p className="text-neutral-600 text-sm leading-relaxed">{it.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Occasions() {
+  return (
+    <section id="occasions" className="bg-white">
+      <div className="mx-auto max-w-7xl px-4 py-12">
+        <h2 className="text-center text-3xl md:text-4xl font-semibold tracking-wide">
           SHOP BY OCCASION
         </h2>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-          {categories.map((c) => (
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          {occasions.map((label, idx) => (
             <button
-              key={c.name}
-              className={`rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-gray-300 hover:shadow ${
-                c.name === "BESKOPE" ? "underline underline-offset-4" : ""
-              }`}
+              key={label + idx}
+              className="px-5 py-2 rounded-full border border-neutral-300 hover:border-neutral-500 text-sm font-medium"
             >
-              {c.name}
+              {label}
             </button>
           ))}
         </div>
-      </Container>
+      </div>
     </section>
   );
 }
 
-// Tarjeta de producto tipo catálogo
-function ProductCard({ p }) {
-  const [hover, setHover] = useState(false);
-  const img = hover && p.images[1] ? p.images[1] : p.images[0];
+function ProductCard({ product }) {
   return (
-    <div
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      className="group relative overflow-hidden rounded-2xl bg-white ring-1 ring-gray-100 shadow-sm"
-    >
-      {p.badge && (
-        <span className="absolute left-3 top-3 z-10 rounded-md bg-black/80 px-2 py-1 text-xs font-semibold text-white">
-          {p.badge}
-        </span>
-      )}
-      <div className="aspect-square overflow-hidden bg-white">
+    <div className="rounded-2xl border border-neutral-200 overflow-hidden bg-white shadow-sm hover:shadow-md transition">
+      <div className="aspect-[4/3] bg-neutral-100">
         <img
-          src={img}
-          alt={p.name}
+          src={product.img}
+          alt={product.name}
+          className="h-full w-full object-cover"
           loading="lazy"
-          className="h-full w-full object-contain p-6 transition-transform duration-300 group-hover:scale-105"
         />
       </div>
       <div className="p-4">
-        <h3 className="text-sm font-medium text-gray-900">{p.name}</h3>
-        <div className="mt-1 flex items-center gap-2">
-          <div className="text-base font-semibold">${p.price.toFixed(2)}</div>
-          {p.compareAt && (
-            <div className="text-sm text-gray-400 line-through">
-              ${p.compareAt.toFixed(2)}
-            </div>
-          )}
-        </div>
-        <div className="mt-3 flex items-center gap-2">
-          <button className="flex-1 rounded-xl bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-black">
+        <h3 className="font-medium">{product.name}</h3>
+        <p className="mt-1 text-pink-600 font-semibold">${product.price.toFixed(2)}</p>
+        <div className="mt-3 flex gap-2">
+          <button className="flex-1 rounded-xl bg-neutral-900 text-white text-sm px-3 py-2">
             Add to cart
           </button>
-          <button className="rounded-xl px-3 py-2 text-sm font-medium ring-1 ring-gray-300 hover:bg-gray-50">
+          <button className="rounded-xl border border-neutral-300 text-sm px-3 py-2">
             Quick View
           </button>
         </div>
@@ -358,94 +210,84 @@ function ProductCard({ p }) {
 
 function ProductGrid() {
   return (
-    <section className="pb-6 pt-2 lg:pb-10">
-      <Container>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <section id="products" className="bg-white">
+      <div className="mx-auto max-w-7xl px-4 pb-16">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((p) => (
-            <ProductCard key={p.id} p={p} />
+            <ProductCard key={p.id} product={p} />
           ))}
         </div>
-      </Container>
+      </div>
     </section>
   );
 }
 
 function Footer() {
   return (
-    <footer className="border-t border-gray-200 bg-white py-12">
-      <Container>
-        <div className="grid gap-8 md:grid-cols-4">
-          <div>
-            <div className="text-2xl font-semibold">CUSIFLORES</div>
-            <p className="mt-3 text-sm text-gray-600 max-w-xs">
-              Sign up for the latest offers and exclusives.
-            </p>
-            <div className="mt-4 flex max-w-sm items-center gap-2">
-              <input
-                className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
-                placeholder="Your email"
-              />
-              <button className="rounded-xl bg-gray-900 px-4 py-2 text-sm font-medium text-white">
-                Join
-              </button>
-            </div>
+    <footer id="contact" className="border-t border-neutral-200 bg-white">
+      <div className="mx-auto max-w-7xl px-4 py-12 grid md:grid-cols-4 gap-8">
+        <div>
+          <div className="text-2xl font-extrabold">
+            <span className="text-pink-600">CUSI</span>FLORES
           </div>
-          <div>
-            <div className="text-sm font-semibold uppercase tracking-wider text-gray-500">
-              About us
-            </div>
-            <ul className="mt-3 space-y-2 text-sm text-gray-700">
-              <li><a href="#" className="hover:text-gray-900">Our Difference</a></li>
-              <li><a href="#" className="hover:text-gray-900">Community Matters</a></li>
-              <li><a href="#" className="hover:text-gray-900">Press</a></li>
-              <li><a href="#" className="hover:text-gray-900">Blog</a></li>
-            </ul>
-          </div>
-          <div>
-            <div className="text-sm font-semibold uppercase tracking-wider text-gray-500">
-              Help
-            </div>
-            <ul className="mt-3 space-y-2 text-sm text-gray-700">
-              <li><a href="#" className="hover:text-gray-900">Flower Care</a></li>
-              <li><a href="#" className="hover:text-gray-900">Shipping</a></li>
-              <li><a href="#" className="hover:text-gray-900">Terms of Use</a></li>
-              <li><a href="#" className="hover:text-gray-900">Privacy Policy</a></li>
-            </ul>
-          </div>
-          <div>
-            <div className="text-sm font-semibold uppercase tracking-wider text-gray-500">
-              Local
-            </div>
-            <ul className="mt-3 space-y-2 text-sm text-gray-700">
-              <li>Los Angeles</li>
-              <li>San Francisco</li>
-              <li>New York City</li>
-              <li>Dallas</li>
-              <li>Chicago</li>
-              <li>Washington DC</li>
-            </ul>
-          </div>
+          <p className="mt-3 text-sm text-neutral-600">
+            Suscríbete para ofertas y novedades.
+          </p>
+          <form className="mt-4 flex gap-2">
+            <input
+              type="email"
+              placeholder="Tu email"
+              className="w-full rounded-xl border border-neutral-300 px-3 py-2 text-sm"
+            />
+            <button className="rounded-xl bg-neutral-900 text-white text-sm px-4">
+              Join
+            </button>
+          </form>
         </div>
-        <div className="mt-10 text-xs text-gray-500">
-          © {new Date().getFullYear()} CUSIFLORES. All rights reserved.
+
+        <div>
+          <h4 className="font-semibold">ABOUT US</h4>
+          <ul className="mt-3 space-y-2 text-sm text-neutral-600">
+            <li>Nuestra diferencia</li>
+            <li>Compromiso</li>
+            <li>Blog</li>
+          </ul>
         </div>
-      </Container>
+
+        <div>
+          <h4 className="font-semibold">HELP</h4>
+          <ul className="mt-3 space-y-2 text-sm text-neutral-600">
+            <li>Cuidado de flores</li>
+            <li>Envíos</li>
+            <li>Privacidad</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-semibold">LOCAL</h4>
+          <ul className="mt-3 space-y-2 text-sm text-neutral-600">
+            <li>CDMX</li>
+            <li>Guadalajara</li>
+            <li>Monterrey</li>
+          </ul>
+        </div>
+      </div>
+      <div className="border-t border-neutral-200 py-4 text-center text-xs text-neutral-500">
+        © {new Date().getFullYear()} CUSIFLORES. All rights reserved.
+      </div>
     </footer>
   );
 }
 
-/* ===========================
-   APP
-   =========================== */
+/* ------------------------------ APP ------------------------------- */
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white text-gray-900">
-      <TopBar />
+    <div className="min-h-screen bg-white text-neutral-900">
       <Header />
-      <Hero />
-      <FeatureCard />
-      <OccasionGrid />
+      <HeroSlider />
+      <IconRow />
+      <Occasions />
       <ProductGrid />
       <Footer />
     </div>

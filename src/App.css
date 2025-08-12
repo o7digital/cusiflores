@@ -1,105 +1,82 @@
-/* Reset básico */
-body, html, .App {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: #fff;
-  color: #333;
-}
-
-/* Header y menú */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-  background: #f8f8f8;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.nav a {
-  margin: 0 15px;
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.nav a:hover {
-  color: #ff4081;
-}
-
-/* Slider */
-.slider-container {
+/* ---------- Hero slider ---------- */
+.hero {
+  position: relative;
   width: 100%;
-  max-height: 500px;
+  aspect-ratio: 16/6;
   overflow: hidden;
 }
 
-.slider-img {
+@media (max-width: 1024px) {
+  .hero { aspect-ratio: 16/7; }
+}
+
+.hero-img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
   width: 100%;
-  height: auto;
   object-fit: cover;
 }
 
-/* Productos */
-.products-section {
-  padding: 40px 20px;
-  text-align: center;
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.30);
 }
 
-.products-section h2 {
-  font-size: 2rem;
-  margin-bottom: 30px;
+.hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
 }
 
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+/* Dots */
+.hero-dots {
+  position: absolute;
+  bottom: 14px;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
 }
-
-.product-card {
+.dot {
+  height: 8px;
+  width: 8px;
+  border-radius: 9999px;
+  background: rgba(255,255,255,.65);
+  transition: all .2s ease;
+}
+.dot.active {
+  width: 24px;
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  padding: 15px;
-  transition: transform 0.3s ease;
 }
 
-.product-card:hover {
-  transform: translateY(-5px);
+/* Buttons */
+.btn-primary {
+  display: inline-block;
+  border-radius: .75rem;
+  background: #db2777;     /* pink-600 */
+  color: #fff;
+  padding: .5rem 1rem;
+  font-weight: 600;
 }
+.btn-primary:hover { background: #be185d; } /* pink-700 */
 
-.product-img {
-  width: 100%;
-  border-radius: 8px;
-  margin-bottom: 10px;
+.btn-secondary {
+  display: inline-block;
+  border-radius: .75rem;
+  background: rgba(255,255,255,.9);
+  color: #111827; /* neutral-900 */
+  padding: .5rem 1rem;
+  font-weight: 600;
 }
+.btn-secondary:hover { background: #fff; }
 
-.product-card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 5px;
+/* ---------- Products (extra suavidad) ---------- */
+.products-grid img {
+  transition: transform .25s ease;
 }
-
-.product-card p {
-  font-weight: bold;
-  color: #ff4081;
-}
-
-/* Footer */
-.footer {
-  background: #f8f8f8;
-  padding: 15px 30px;
-  text-align: center;
-  font-size: 0.9rem;
-  margin-top: 40px;
+.products-grid img:hover {
+  transform: scale(1.02);
 }

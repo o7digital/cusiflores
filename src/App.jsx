@@ -10,12 +10,12 @@ const heroSlides = [
   { src: "/slider/foto4.jpg", headline: "Envía amor en un ramo", sub: "Atención personalizada" },
 ];
 
-// Chips de ocasión
+// Chips de ocasión (según tu lista)
 const occasions = [
-  "BESPOKE",
+  "BESKOPE",
   "CUMPLEAÑOS",
   "DÍA SIGUIENTE",
-  "PLANTAS",
+  "PLANES",
   "BODAS",
   "DÍA DE LAS MADRES",
   "DÍA DE MUERTOS",
@@ -24,13 +24,13 @@ const occasions = [
 // Productos: usa imágenes locales en public/products/
 const products = [
   { id: 201, name: "Rosas amarillas (mini)", price: 120, img: "/products/product-01.jpg" },
-  { id: 202, name: "Diente de león con luz", price: 100, img: "/products/product-02.jpg" },
+  { id: 202, name: "Diente de león con luz",  price: 100, img: "/products/product-02.jpg" },
   { id: 203, name: "Rosas naranja con verde", price: 135, img: "/products/product-03.jpg" },
-  { id: 204, name: "Cubeta rosa", price: 200, img: "/products/product-04.jpg" },
-  { id: 205, name: "Cubeta morada", price: 200, img: "/products/product-05.jpg" },
-  { id: 206, name: "Astromelias en maceta", price: 85,  img: "/products/product-06.jpg" },
-  { id: 207, name: "Arreglo grande 1", price: 260, img: "/products/product-07.jpg" },
-  { id: 208, name: "Arreglo grande 2", price: 260, img: "/products/product-08.jpg" },
+  { id: 204, name: "Cubeta rosa",              price: 200, img: "/products/product-04.jpg" },
+  { id: 205, name: "Cubeta morada",            price: 200, img: "/products/product-05.jpg" },
+  { id: 206, name: "Astromelias en maceta",    price:  85, img: "/products/product-06.jpg" },
+  { id: 207, name: "Arreglo grande 1",         price: 260, img: "/products/product-07.jpg" },
+  { id: 208, name: "Arreglo grande 2",         price: 260, img: "/products/product-08.jpg" },
 ];
 
 /* ---------------------------- COMPONENTS --------------------------- */
@@ -61,7 +61,6 @@ function HeroSlider() {
   }, [slides.length]);
 
   if (!slides.length) return null;
-
   const curr = slides[i];
 
   return (
@@ -140,7 +139,7 @@ function IconRow() {
 
   return (
     <section className="bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-10 md:py-14">
+      <div className="mx-auto max-w-7xl px-4 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {items.map((it) => (
             <div key={it.title} className="flex items-start gap-4">

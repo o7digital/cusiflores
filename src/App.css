@@ -1,25 +1,16 @@
-/* ====== Reset básico ====== */
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: system-ui, sans-serif;
-}
+/* ------------------------------ HERO SLIDER ------------------------------ */
 
-/* ====== HERO SLIDER ====== */
 .hero {
   position: relative;
   width: 100%;
-  height: 500px; /* altura en desktop */
+  height: 70vh; /* Reducido 30% en desktop */
   overflow: hidden;
 }
 
-@media (max-width: 768px) {
-  .hero {
-    height: 350px; /* altura en móvil */
-  }
-}
-
 .hero-img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -27,31 +18,52 @@ body, html {
 
 .hero-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.35);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
 }
 
 .hero-content {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  transform: translateY(-50%);
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  align-items: center;
   color: white;
-  z-index: 2;
 }
 
+.hero-dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 15;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.dot.active {
+  opacity: 1;
+}
+
+/* ------------------------------ BOTONES HERO ------------------------------ */
+
 .btn-primary {
-  background-color: #db2777; /* rosa */
+  background-color: #db2777;
   color: white;
-  padding: 0.6rem 1.2rem;
-  border-radius: 9999px;
-  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  border: none;
+  transition: background-color 0.2s ease;
 }
 
 .btn-primary:hover {
@@ -59,23 +71,29 @@ body, html {
 }
 
 .btn-secondary {
-  background-color: transparent;
-  color: white;
-  padding: 0.6rem 1.2rem;
-  border-radius: 9999px;
-  font-size: 0.9rem;
+  background-color: white;
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  border: 1px solid white;
+  transition: background-color 0.2s ease;
 }
 
 .btn-secondary:hover {
-  background-color: white;
-  color: black;
+  background-color: #f3f4f6;
 }
 
-/* ====== DOTS ====== */
-.hero-dots {
-  position: absolute;
-  bottom: 15px;
-  left: 50%;
-  transform:
+/* ------------------------------ RESPONSIVE ------------------------------ */
+
+@media (max-width: 1024px) {
+  .hero {
+    height: 80vh; /* Un poco más alto en tablet */
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    height: 85vh; /* Más alto en móvil */
+  }
+}

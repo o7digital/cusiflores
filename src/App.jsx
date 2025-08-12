@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -12,55 +13,63 @@ import {
 } from "lucide-react";
 
 /* ===========================
-   DATA (mock)
+   DATA
    =========================== */
 
+// Tus 4 fotos locales del slider
 const heroSlides = [
   {
     id: 1,
-    eyebrow: "30% OFF TODAY",
-    title: "Spring Collections",
+    eyebrow: " ",
+    title: "Colección Especial",
     cta: "Shop Now",
-    image:
-      "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?q=80&w=1600&auto=format&fit=crop",
+    image: "/slider/foto1.jpg",
+    alt: "Colección Especial",
   },
   {
     id: 2,
-    eyebrow: "FRESH BLOOMS",
-    title: "Inspired By Nature",
+    eyebrow: " ",
+    title: "Nuevos Arreglos",
     cta: "Shop Now",
-    image:
-      "https://images.unsplash.com/photo-1435783459217-ee7fe5414abe?q=80&w=1600&auto=format&fit=crop",
+    image: "/slider/foto2.jpg",
+    alt: "Nuevos Arreglos",
   },
   {
     id: 3,
-    eyebrow: "NEW ARRIVALS",
-    title: "Elegant Flower",
+    eyebrow: " ",
+    title: "Flores Únicas",
     cta: "Shop Now",
-    image:
-      "https://images.unsplash.com/photo-1503435824048-a799a3a84bf7?q=80&w=1600&auto=format&fit=crop",
+    image: "/slider/foto3.jpg",
+    alt: "Flores Únicas",
+  },
+  {
+    id: 4,
+    eyebrow: " ",
+    title: "Edición Limitada",
+    cta: "Shop Now",
+    image: "/slider/foto4.jpg",
+    alt: "Edición Limitada",
   },
 ];
 
 const categories = [
-  { name: "BESKOPE" }, // así como lo pediste
+  { name: "BESKOPE" },      // lo dejamos tal cual pediste
   { name: "CUMPLEAÑOS" },
   { name: "DÍA SIGUIENTE" },
-  { name: "PLANES" },
+  { name: "PLANES" },       // dime si querías PLANTAS
   { name: "BODAS" },
   { name: "DÍA DE LAS MADRES" },
   { name: "DÍA DE MUERTOS" },
 ];
 
-/* Fotos de flores -> estilo catálogo (fondo claro).
-   Si luego quieres, movemos estas imágenes a /public/flowers y las servimos locales. */
+// Productos con look catálogo (luego cambiamos por catálogo real si quieres)
 const products = [
   {
     id: 101,
     name: "Love Story",
     price: 135,
     images: [
-      "https://images.unsplash.com/photo-1491002052546-bf38f186af56?q=80&w=1400&auto=format&fit=crop", // tulipanes
+      "https://images.unsplash.com/photo-1491002052546-bf38f186af56?q=80&w=1400&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1484704849700-f032a568e944?q=80&w=1400&auto=format&fit=crop",
     ],
   },
@@ -69,7 +78,7 @@ const products = [
     name: "Winifred",
     price: 100,
     images: [
-      "https://images.unsplash.com/photo-1509043759401-136742328bb3?q=80&w=1400&auto=format&fit=crop", // ramo rosa
+      "https://images.unsplash.com/photo-1509043759401-136742328bb3?q=80&w=1400&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?q=80&w=1400&auto=format&fit=crop",
     ],
   },
@@ -78,7 +87,7 @@ const products = [
     name: "Elegant Flower",
     price: 120,
     images: [
-      "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?q=80&w=1400&auto=format&fit=crop", // orquídeas
+      "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?q=80&w=1400&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1519681395604-b2b7b3d29747?q=80&w=1400&auto=format&fit=crop",
     ],
   },
@@ -87,7 +96,7 @@ const products = [
     name: "Love You",
     price: 200,
     images: [
-      "https://images.unsplash.com/photo-1491554150235-3603d2d4e9a7?q=80&w=1400&auto=format&fit=crop", // rosas rojas
+      "https://images.unsplash.com/photo-1491554150235-3603d2d4e9a7?q=80&w=1400&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1400&auto=format&fit=crop",
     ],
   },
@@ -96,7 +105,7 @@ const products = [
     name: "Sun Light",
     price: 100,
     images: [
-      "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1400&auto=format&fit=crop", // flores amarillas
+      "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1400&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1436891620584-47fd0e565afb?q=80&w=1400&auto=format&fit=crop",
     ],
   },
@@ -106,7 +115,7 @@ const products = [
     price: 200,
     badge: "-40%",
     images: [
-      "https://images.unsplash.com/photo-1457089328109-e5d9bd499191?q=80&w=1400&auto=format&fit=crop", // ramo mix
+      "https://images.unsplash.com/photo-1457089328109-e5d9bd499191?q=80&w=1400&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1458538977777-0549b2370168?q=80&w=1400&auto=format&fit=crop",
     ],
   },
@@ -116,7 +125,7 @@ const products = [
     price: 60,
     compareAt: 90,
     images: [
-      "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1400&auto=format&fit=crop", // rojo sobre claro
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1400&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1505577058444-a3dab90d4253?q=80&w=1400&auto=format&fit=crop",
     ],
   },
@@ -125,7 +134,7 @@ const products = [
     name: "Pure White",
     price: 85,
     images: [
-      "https://images.unsplash.com/photo-1519681395604-b2b7b3d29747?q=80&w=1400&auto=format&fit=crop", // blanco
+      "https://images.unsplash.com/photo-1519681395604-b2b7b3d29747?q=80&w=1400&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1547097465-8692e2f5a00b?q=80&w=1400&auto=format&fit=crop",
     ],
   },
@@ -172,8 +181,9 @@ function Header() {
       <Container>
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
-            {/* LOGO */}
-            <a className="text-2xl font-semibold tracking-tight" href="#">CUSIFLORES</a>
+            <a className="text-2xl font-semibold tracking-tight" href="#">
+              CUSIFLORES
+            </a>
             <nav className="hidden lg:flex items-center gap-6 text-sm text-gray-700">
               <a className="hover:text-gray-900" href="#">Home</a>
               <a className="hover:text-gray-900" href="#">Shop</a>
@@ -210,27 +220,29 @@ function Hero() {
 
   return (
     <div className="relative">
-      {/* Slide */}
       <div className="relative h-[60vh] lg:h-[78vh] overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.img
             key={current.id}
             src={current.image}
             className="absolute inset-0 h-full w-full object-cover"
+            referrerPolicy="no-referrer"
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
             transition={{ duration: 0.8 }}
-            alt={current.title}
+            alt={current.alt || current.title}
           />
         </AnimatePresence>
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
         <Container>
           <div className="relative z-10 flex h-[60vh] lg:h-[78vh] items-center">
             <div className="max-w-xl text-white">
-              <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs uppercase tracking-widest ring-1 ring-white/30">
-                {current.eyebrow}
-              </span>
+              {current.eyebrow?.trim() && (
+                <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs uppercase tracking-widest ring-1 ring-white/30">
+                  {current.eyebrow}
+                </span>
+              )}
               <h1 className="mt-4 text-4xl font-semibold leading-tight md:text-5xl lg:text-6xl">
                 {current.title}
               </h1>
@@ -245,24 +257,12 @@ function Hero() {
   );
 }
 
-/* TARJETA DE FEATURES (no pegada al slider) */
+// Tarjeta con los 3 features (separada del slider)
 function FeatureCard() {
   const items = [
-    {
-      t: "Order Online",
-      d: "We’re at capacity for deliveries Monday 30th August",
-      Icon: Smartphone,
-    },
-    {
-      t: "Our Stores",
-      d: "We have 4 stores located in the North West of Sydney",
-      Icon: MapPin,
-    },
-    {
-      t: "Delivery",
-      d: "Order before 1pm Mon–Fri or 12pm Sat for same-day",
-      Icon: Truck,
-    },
+    { t: "Order Online", d: "We’re at capacity for deliveries Monday 30th August", Icon: Smartphone },
+    { t: "Our Stores",  d: "We have 4 stores located in the North West of Sydney", Icon: MapPin },
+    { t: "Delivery",    d: "Order before 1pm Mon–Fri or 12pm Sat for same-day",  Icon: Truck },
   ];
   return (
     <section className="mt-8 md:mt-12">
@@ -285,7 +285,7 @@ function FeatureCard() {
   );
 }
 
-/* SHOP BY OCCASION centrado */
+// SHOP BY OCCASION centrado
 function OccasionGrid() {
   return (
     <section className="py-12 lg:py-16">
@@ -293,7 +293,6 @@ function OccasionGrid() {
         <h2 className="text-2xl font-semibold tracking-tight uppercase text-center">
           SHOP BY OCCASION
         </h2>
-
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
           {categories.map((c) => (
             <button
@@ -311,11 +310,10 @@ function OccasionGrid() {
   );
 }
 
-/* Tarjeta de producto con look catálogo */
+// Tarjeta de producto tipo catálogo
 function ProductCard({ p }) {
   const [hover, setHover] = useState(false);
   const img = hover && p.images[1] ? p.images[1] : p.images[0];
-
   return (
     <div
       onMouseEnter={() => setHover(true)}

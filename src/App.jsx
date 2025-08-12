@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./App.css";
 
-// Datos de productos reales con rutas exactas
+// Datos de productos
 const products = [
   { id: 201, name: "Rosas amarillas (mini)", price: 120, img: "/products/producto-01.jpg" },
   { id: 202, name: "Diente de león con luz", price: 100, img: "/products/producto-02.jpg" },
@@ -16,7 +16,7 @@ const products = [
   { id: 208, name: "Arreglo grande 2", price: 260, img: "/products/producto-08.jpg" },
 ];
 
-// Configuración del slider
+// Config slider
 const sliderSettings = {
   dots: true,
   infinite: true,
@@ -30,7 +30,19 @@ const sliderSettings = {
 export default function App() {
   return (
     <div className="App">
-      {/* Slider principal */}
+
+      {/* Menú y logo */}
+      <header className="header">
+        <div className="logo">🌸 Cusi Flores</div>
+        <nav className="nav">
+          <a href="#home">Inicio</a>
+          <a href="#products">Productos</a>
+          <a href="#about">Nosotros</a>
+          <a href="#contact">Contacto</a>
+        </nav>
+      </header>
+
+      {/* Hero con slider */}
       <section className="slider-container">
         <Slider {...sliderSettings}>
           <div>
@@ -49,7 +61,7 @@ export default function App() {
       </section>
 
       {/* Sección de productos */}
-      <section className="products-section">
+      <section id="products" className="products-section">
         <h2>Nuestros Productos</h2>
         <div className="products-grid">
           {products.map((product) => (
@@ -61,6 +73,11 @@ export default function App() {
           ))}
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="footer">
+        <p>© {new Date().getFullYear()} Cusi Flores - Todos los derechos reservados.</p>
+      </footer>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./App.css";
 
-// Datos de productos reales
+// Datos de productos reales con rutas exactas
 const products = [
   { id: 201, name: "Rosas amarillas (mini)", price: 120, img: "/products/producto-01.jpg" },
   { id: 202, name: "Diente de león con luz", price: 100, img: "/products/producto-02.jpg" },
@@ -64,4 +64,3 @@ export default function App() {
     </div>
   );
 }
-// force redeploy

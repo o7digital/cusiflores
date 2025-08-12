@@ -1,16 +1,12 @@
-/* ------------------------------ HERO SLIDER ------------------------------ */
-
+/* --- HERO SLIDER --- */
 .hero {
   position: relative;
   width: 100%;
-  height: 70vh; /* Reducido 30% en desktop */
+  height: 70vh; /* reducido 30% */
   overflow: hidden;
 }
 
 .hero-img {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -18,17 +14,20 @@
 
 .hero-overlay {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.35);
 }
 
 .hero-content {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
   z-index: 10;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  color: white;
 }
 
 .hero-dots {
@@ -38,7 +37,6 @@
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
-  z-index: 15;
 }
 
 .dot {
@@ -46,54 +44,63 @@
   height: 10px;
   background: white;
   border-radius: 50%;
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
+  opacity: 0.6;
+  transition: opacity 0.3s;
 }
 
 .dot.active {
   opacity: 1;
 }
 
-/* ------------------------------ BOTONES HERO ------------------------------ */
-
+/* --- BOTONES --- */
 .btn-primary {
   background-color: #db2777;
   color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.75rem;
   font-size: 0.875rem;
   font-weight: 500;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.3s;
 }
-
 .btn-primary:hover {
   background-color: #be185d;
 }
 
 .btn-secondary {
   background-color: white;
-  color: black;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  color: #111;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.75rem;
   font-size: 0.875rem;
   font-weight: 500;
-  transition: background-color 0.2s ease;
+  border: 1px solid #e5e5e5;
+  transition: background-color 0.3s, color 0.3s;
 }
-
 .btn-secondary:hover {
   background-color: #f3f4f6;
 }
 
-/* ------------------------------ RESPONSIVE ------------------------------ */
-
-@media (max-width: 1024px) {
-  .hero {
-    height: 80vh; /* Un poco más alto en tablet */
-  }
+/* --- PRODUCTOS --- */
+#products img {
+  transition: transform 0.3s;
+}
+#products img:hover {
+  transform: scale(1.05);
 }
 
-@media (max-width: 640px) {
-  .hero {
-    height: 85vh; /* Más alto en móvil */
-  }
+/* --- ICONOS --- */
+section.bg-white .w-9 {
+  flex-shrink: 0;
+}
+
+/* --- FOOTER --- */
+footer {
+  font-size: 0.875rem;
+}
+footer h4 {
+  margin-bottom: 0.5rem;
+}
+footer ul li:hover {
+  color: #db2777;
+  cursor: pointer;
 }
